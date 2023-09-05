@@ -6,11 +6,17 @@ namespace LearnImmutableTest
     [TestClass]
     public class SampleRecordTest
     {
+        SampleRecord record1=null;
+        [TestInitialize]
+        public void TestSetup()
+        {
+            record1 = new SampleRecord(ParamString: "Test", ParamInt: 1, ParamDate: new DateTime(2023, 9, 5));
+        }
+        
         [TestMethod]
         public void TestRecordTypeEqualityWithPositionParameters()
         {
             //arrange
-            SampleRecord record1 = new SampleRecord(ParamString: "Test", ParamInt: 1, ParamDate: new DateTime(2023, 9, 5));
             SampleRecord record2 = new SampleRecord(ParamString: "Test", ParamInt: 1, ParamDate: new DateTime(2023, 9, 5));
 
             //assert
@@ -33,7 +39,7 @@ namespace LearnImmutableTest
         public void TestRecordTypeSamenessWithPositionParameters()
         {
             //arrange
-            SampleRecord record1 = new SampleRecord(ParamString: "Test", ParamInt: 1, ParamDate: new DateTime(2023, 9, 5));
+            
             SampleRecord record2 = record1;
 
             //assert
@@ -45,7 +51,7 @@ namespace LearnImmutableTest
         public void TestRecordTypeAutoImplementedProperties()
         {
             //Arrange
-            SampleRecord record1 = new SampleRecord(ParamString: "Test", ParamInt: 1, ParamDate: new DateTime(2023, 9, 5));
+            
 
             //Assert
             Assert.AreEqual("Test", record1.ParamString);
@@ -57,7 +63,7 @@ namespace LearnImmutableTest
         {
             //Assign
             string expected = "NewString";
-            SampleRecord record1 = new SampleRecord(ParamString: "Test", ParamInt: 1, ParamDate: new DateTime(2023, 9, 5));
+            
             
             //Action
             record1.MutableProperty = expected;
@@ -71,8 +77,7 @@ namespace LearnImmutableTest
         public void TestRecordTypeHaveDestructMethodWithOutParam()
         {
             //Arrange
-            SampleRecord record1 =
-                new SampleRecord(ParamString: "Test", ParamInt: 1, ParamDate: new DateTime(2023, 9, 5)) { MutableProperty = "InitialString" };
+            
             string outString = String.Empty;
             int outInt = 0;
             DateTime outDateTime = new DateTime();
@@ -83,7 +88,32 @@ namespace LearnImmutableTest
             Assert.AreEqual(outString, "Test");
             Assert.AreEqual(outInt, 1);
             Assert.AreEqual(outDateTime, new DateTime(2023,9, 5));
+        }
+
+        [TestMethod]
+        public void NonDestructionPropertyInfo()
+        {
+            //Arrange
+            
+            //Action
+            SampleRecord record2 = record1 with { ParamInt = 2 };
+            //record.ParamInt = 5;// this is not allow per compiler
+            //Assert
+            Assert.AreNotEqual(record1, record2);//There are 2 different objects
+            Assert.AreNotSame(record1, record2);//record2 points to different instance than record1 - reference comparison
+            Assert.AreEqual(record2.ParamInt, 2);//record2 has updated ParamInt
+            Assert.AreEqual(record1.ParamInt, 1);//record1 is immutable
+            Assert.AreEqual(record2.ParamString, "Test");//the record2 has the same properties as record1 if the property has not been modified
+
+
 
         }
+
+
+
+
+
+
+
     }
 }
