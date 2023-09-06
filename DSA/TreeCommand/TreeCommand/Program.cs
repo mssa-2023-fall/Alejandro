@@ -1,22 +1,50 @@
-﻿var startingDir = args[0];
+﻿using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.IO;
+using TreeNode;
 
-PrintDir(startingDir, 0);
+var startingDir = args[0];
 
-void PrintDir(string startingDir, int level)
+TreeNode<FileSystemInfo> rootNode = new(new DirectoryInfo(startingDir));
+BuildTree(rootNode);
+PrintTree(rootNode);
+Console.WriteLine("Done");
+
+
+void PrintTree(TreeNode<FileSystemInfo> tree, int level = 0)
 {
-    string[] subdirs = Directory.GetDirectories(startingDir);
-    if (subdirs.Length == 0) return;
-    foreach (var item in subdirs)
+    Console.WriteLine(new String('-', level) + tree.ToString());
+    level++;
+    foreach (var item in tree.Children)
     {
-        try
-        {
-            Console.WriteLine($"{new String('-', level)} {item}");
-            PrintDir(item, level + 1);
-        }
-        catch (Exception)
-        {
+        PrintTree(item, level);
+    }
+}
 
-            continue;
+
+void BuildTree(TreeNode<FileSystemInfo> parent)
+{
+    DirectoryInfo? dir = parent.NodeContent as DirectoryInfo;
+
+    if (dir?.GetDirectories().Length > 0)
+    {
+        foreach (var directory in dir.GetDirectories())
+        {
+            var dirNode = new TreeNode<FileSystemInfo>(directory, parent);
+            parent.AppendChildNode(dirNode);
+            BuildTree(dirNode);
+        }
+    }
+    if (dir?.GetFiles().Length > 0)
+    {
+        foreach (var file in dir.GetFiles())
+        {
+            var fileNode = new TreeNode<FileSystemInfo>(file, parent);
+            parent.AppendChildNode(fileNode);
+
         }
     }
 }
+
+
+
