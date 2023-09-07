@@ -45,6 +45,3 @@ void BuildTree(TreeNode<FileSystemInfo> parent)
         }
     }
 }
-
-
-
