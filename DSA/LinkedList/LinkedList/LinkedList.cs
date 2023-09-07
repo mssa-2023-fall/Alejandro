@@ -19,7 +19,7 @@
     }
     public interface INode<T>
     {
-        T Content { get; set; }
+        T Content { get; set; } 
         INode<T>? Next();
     }
     
