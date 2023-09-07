@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace LinkedList
 {
-    public class ChinLinkedList<T> : ILinkedList<T>
+    public class AlexLinkedList<T> : ILinkedList<T>
     {
 
 
-        public ChinLinkedList()
+        public AlexLinkedList()
         {
             this.Count = 0;
         }
 
-        public ChinLinkedList(ChinNode<T>? initialNode)
+        public AlexLinkedList(AlexNode<T>? initialNode)
         {
             this.Head = initialNode;
 

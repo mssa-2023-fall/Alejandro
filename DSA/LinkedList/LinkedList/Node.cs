@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace LinkedList
 {
-    public class ChinNode<T> : INode<T>
+    public class AlexNode<T> : INode<T>
     {
 
         public INode<T>? NextNode { get; private set; }
 
-        public ChinNode(T content)
+        public AlexNode(T content)
         {
             this.Content = content;
             NextNode = null;

@@ -3,12 +3,12 @@ using LinkedList;
 namespace LinkedListTest
 {
     [TestClass]
-    public class ChinLinkedListTest
+    public class AlexLinkedListTest
     {
         [TestMethod]
         public void DefaultConstructorCreatesEmptyLL()
         {
-            var testLL = new ChinLinkedList<int>();
+            var testLL = new AlexLinkedList<int>();
             Assert.AreEqual(0, testLL.Count);
             Assert.IsNull(testLL.Head);
             Assert.IsNull(testLL.Tail);
@@ -16,7 +16,7 @@ namespace LinkedListTest
         [TestMethod]
         public void EmptyLLCallingRemoveShouldThrowInvalidOperationException()
         {
-            var testLL = new ChinLinkedList<int>();
+            var testLL = new AlexLinkedList<int>();
             Assert.ThrowsException<InvalidOperationException>(() => testLL.RemoveLast(), "Remove method on empty list did not throw an exception");
             Assert.ThrowsException<InvalidOperationException>(() => testLL.RemoveFirst(), "Remove method on empty list did not throw an exception");
             Assert.ThrowsException<InvalidOperationException>(() => testLL.RemoveAt(0), "Remove method on empty list did not throw an exception");
@@ -26,8 +26,8 @@ namespace LinkedListTest
         [TestMethod]
         public void ParameterizedConstructorShouldPopulateTheHeadAndTailNode()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
             Assert.AreEqual(1, testLL.Count);
             Assert.IsNotNull(testLL.Head);
             Assert.IsNotNull(testLL.Tail);
@@ -38,9 +38,9 @@ namespace LinkedListTest
         [TestMethod]
         public void AddFirstShouldReplaceHeadNodeAndCreateLinkToOldHead()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            var addFirstNode = new ChinNode<int>(10);
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            var addFirstNode = new AlexNode<int>(10);
 
             testLL.AddFirst(addFirstNode);
 
@@ -56,9 +56,9 @@ namespace LinkedListTest
         [TestMethod]
         public void AddLastShouldReplaceTailNodeAndCreateLinkFromTheOldTail()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            var addLastNode = new ChinNode<int>(10);
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            var addLastNode = new AlexNode<int>(10);
 
             testLL.AddLast(addLastNode);
 
@@ -74,9 +74,9 @@ namespace LinkedListTest
         [TestMethod]
         public void ClearMethodShouldReturnEmptyLinkedList()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            var addLastNode = new ChinNode<int>(10);
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            var addLastNode = new AlexNode<int>(10);
             testLL.AddLast(addLastNode);
 
             testLL.Clear();
@@ -89,10 +89,10 @@ namespace LinkedListTest
         [TestMethod]
         public void FindAllMethodShouldReturnNullIfNotFound()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddFirst(new ChinNode<int>(6));
-            testLL.AddFirst(new ChinNode<int>(7));
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddFirst(new AlexNode<int>(6));
+            testLL.AddFirst(new AlexNode<int>(7));
             //finding nonexistant value
             INode<int>[] result = testLL.FindAll(1);
 
@@ -104,10 +104,10 @@ namespace LinkedListTest
         [TestMethod]
         public void FindAllMethodShouldReturnOne()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddFirst(new ChinNode<int>(6));
-            testLL.AddFirst(new ChinNode<int>(7));
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddFirst(new AlexNode<int>(6));
+            testLL.AddFirst(new AlexNode<int>(7));
             //finding nonexistant value
             INode<int>[] result = testLL.FindAll(5);
 
@@ -121,11 +121,11 @@ namespace LinkedListTest
         [TestMethod]
         public void FindAllMethodShouldReturnMany()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddFirst(new ChinNode<int>(6));
-            testLL.AddFirst(new ChinNode<int>(7));
-            testLL.AddFirst(new ChinNode<int>(5));
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddFirst(new AlexNode<int>(6));
+            testLL.AddFirst(new AlexNode<int>(7));
+            testLL.AddFirst(new AlexNode<int>(5));
             //finding nonexistant value
             INode<int>[] result = testLL.FindAll(5);
 
@@ -138,11 +138,11 @@ namespace LinkedListTest
         [TestMethod]
         public void FindOneMethodShouldReturnExactlyOneEvenIfThereAreMultipleMatches()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddFirst(new ChinNode<int>(6));
-            testLL.AddFirst(new ChinNode<int>(7));
-            testLL.AddFirst(new ChinNode<int>(5));
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddFirst(new AlexNode<int>(6));
+            testLL.AddFirst(new AlexNode<int>(7));
+            testLL.AddFirst(new AlexNode<int>(5));
             //finding nonexistant value
             INode<int>? result = testLL.FindFirst(5);
             Assert.IsNotNull(result);
@@ -151,11 +151,11 @@ namespace LinkedListTest
         [TestMethod]
         public void FindOneMethodShouldReturnNullWhenThereAreNoMatch()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddFirst(new ChinNode<int>(6));
-            testLL.AddFirst(new ChinNode<int>(7));
-            testLL.AddFirst(new ChinNode<int>(5));
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddFirst(new AlexNode<int>(6));
+            testLL.AddFirst(new AlexNode<int>(7));
+            testLL.AddFirst(new AlexNode<int>(5));
             //finding nonexistant value
             INode<int>? result = testLL.FindFirst(8);
             Assert.IsNull(result);
@@ -163,11 +163,11 @@ namespace LinkedListTest
         [TestMethod]
         public void FindOneMethodShouldReturnOneWhenThereIsOneMatch()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddFirst(new ChinNode<int>(6));
-            testLL.AddFirst(new ChinNode<int>(7));
-            testLL.AddFirst(new ChinNode<int>(5));
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddFirst(new AlexNode<int>(6));
+            testLL.AddFirst(new AlexNode<int>(7));
+            testLL.AddFirst(new AlexNode<int>(5));
             //finding nonexistant value
             INode<int>? result = testLL.FindFirst(7);
             Assert.IsNotNull(result);
@@ -178,10 +178,10 @@ namespace LinkedListTest
         public void RemoveFirstShouldRemoveHeadAndMakeSecondNodeTheHead()
         {
             //Arrange
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddFirst(new ChinNode<int>(6));
-            testLL.AddFirst(new ChinNode<int>(7));
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddFirst(new AlexNode<int>(6));
+            testLL.AddFirst(new AlexNode<int>(7));
 
             testLL.RemoveFirst();
             Assert.AreEqual(2, testLL.Count);
@@ -192,8 +192,8 @@ namespace LinkedListTest
         [TestMethod]
         public void RemoveFirstShouldReturnEmptyLinkedListWhenThereIsOnlyOneNode()
         {
-            var initialNode = new ChinNode<int>(5);
-            var testLL = new ChinLinkedList<int>(initialNode);
+            var initialNode = new AlexNode<int>(5);
+            var testLL = new AlexLinkedList<int>(initialNode);
 
             testLL.RemoveFirst();
 
@@ -205,7 +205,7 @@ namespace LinkedListTest
         [TestMethod]
         public void RemoveFirstShouldThrowExceptionIfLinkedListIsEmpty()
         {
-            var testLL = new ChinLinkedList<int>();
+            var testLL = new AlexLinkedList<int>();
 
             Assert.ThrowsException<InvalidOperationException>(() => testLL.RemoveFirst(), "We think, if one attempts to remove an item from empty LL, it should throw Exception");
 
@@ -214,12 +214,12 @@ namespace LinkedListTest
         [TestMethod]
         public void RemoveAtShouldRemoveNodeAtGivenIndex_Index_is_zero_based()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
-            testLL.AddLast(new ChinNode<int>(7));//index 2
-            testLL.AddLast(new ChinNode<int>(8));//index 3
-            testLL.AddLast(new ChinNode<int>(9));//index 4
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
+            testLL.AddLast(new AlexNode<int>(7));//index 2
+            testLL.AddLast(new AlexNode<int>(8));//index 3
+            testLL.AddLast(new AlexNode<int>(9));//index 4
 
             testLL.RemoveAt(2);
 
@@ -235,12 +235,12 @@ namespace LinkedListTest
         [TestMethod]
         public void RemoveTailShouldNotThrowException()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
-            testLL.AddLast(new ChinNode<int>(7));//index 2
-            testLL.AddLast(new ChinNode<int>(8));//index 3
-            testLL.AddLast(new ChinNode<int>(9));//index 4
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
+            testLL.AddLast(new AlexNode<int>(7));//index 2
+            testLL.AddLast(new AlexNode<int>(8));//index 3
+            testLL.AddLast(new AlexNode<int>(9));//index 4
 
             testLL.RemoveAt(4);
 
@@ -255,18 +255,18 @@ namespace LinkedListTest
         [TestMethod]
         public void RemoveAtBeyondTailShouldThrowInvalidOperation()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
 
             Assert.ThrowsException<InvalidOperationException>(() => testLL.RemoveAt(2));
         }
         [TestMethod]
         public void RemoveAtNegativeValueShouldThrowInvalidOperation()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
 
             Assert.ThrowsException<InvalidOperationException>(() => testLL.RemoveAt(-1));
         }
@@ -274,12 +274,12 @@ namespace LinkedListTest
         [TestMethod]
         public void RemoveAtHeadShouldWork()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
-            testLL.AddLast(new ChinNode<int>(7));//index 2
-            testLL.AddLast(new ChinNode<int>(8));//index 3
-            testLL.AddLast(new ChinNode<int>(9));//index 4
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
+            testLL.AddLast(new AlexNode<int>(7));//index 2
+            testLL.AddLast(new AlexNode<int>(8));//index 3
+            testLL.AddLast(new AlexNode<int>(9));//index 4
 
             testLL.RemoveAt(0);
 
@@ -294,14 +294,14 @@ namespace LinkedListTest
         [TestMethod]
         public void InsertAfterNodeIndexZeroShouldMakeNodeRightAfterHead()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
-            testLL.AddLast(new ChinNode<int>(7));//index 2
-            testLL.AddLast(new ChinNode<int>(8));//index 3
-            testLL.AddLast(new ChinNode<int>(9));//index 4
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
+            testLL.AddLast(new AlexNode<int>(7));//index 2
+            testLL.AddLast(new AlexNode<int>(8));//index 3
+            testLL.AddLast(new AlexNode<int>(9));//index 4
 
-            testLL.InsertAfterNodeIndex(new ChinNode<int>(99), 0);
+            testLL.InsertAfterNodeIndex(new AlexNode<int>(99), 0);
 
             Assert.AreEqual(6, testLL.Count);
 
@@ -315,14 +315,14 @@ namespace LinkedListTest
         [TestMethod]
         public void InsertAtEndShouldBeTheSameAsAddLast()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
-            testLL.AddLast(new ChinNode<int>(7));//index 2
-            testLL.AddLast(new ChinNode<int>(8));//index 3
-            testLL.AddLast(new ChinNode<int>(9));//index 4
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
+            testLL.AddLast(new AlexNode<int>(7));//index 2
+            testLL.AddLast(new AlexNode<int>(8));//index 3
+            testLL.AddLast(new AlexNode<int>(9));//index 4
 
-            testLL.InsertAfterNodeIndex(new ChinNode<int>(99), testLL.Count - 1);
+            testLL.InsertAfterNodeIndex(new AlexNode<int>(99), testLL.Count - 1);
 
             Assert.AreEqual(6, testLL.Count);
 
@@ -336,29 +336,29 @@ namespace LinkedListTest
         [TestMethod]
         public void InsertAtShouldBeBetweenZeroAndCountMinusOneOrItWillThrowInvalidOperation()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
-            testLL.AddLast(new ChinNode<int>(7));//index 2
-            testLL.AddLast(new ChinNode<int>(8));//index 3
-            testLL.AddLast(new ChinNode<int>(9));//index 4
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
+            testLL.AddLast(new AlexNode<int>(7));//index 2
+            testLL.AddLast(new AlexNode<int>(8));//index 3
+            testLL.AddLast(new AlexNode<int>(9));//index 4
 
-            Assert.ThrowsException<InvalidOperationException>(() => testLL.InsertAfterNodeIndex(new ChinNode<int>(99), 5));
-            Assert.ThrowsException<InvalidOperationException>(() => testLL.InsertAfterNodeIndex(new ChinNode<int>(99), -1));
+            Assert.ThrowsException<InvalidOperationException>(() => testLL.InsertAfterNodeIndex(new AlexNode<int>(99), 5));
+            Assert.ThrowsException<InvalidOperationException>(() => testLL.InsertAfterNodeIndex(new AlexNode<int>(99), -1));
 
         }
 
         [TestMethod]
         public void InsertAtAnyValidPositionShouldWork()
         {
-            var initialNode = new ChinNode<int>(5);//index 0
-            var testLL = new ChinLinkedList<int>(initialNode);
-            testLL.AddLast(new ChinNode<int>(6));//index 1
-            testLL.AddLast(new ChinNode<int>(7));//index 2
-            testLL.AddLast(new ChinNode<int>(8));//index 3
-            testLL.AddLast(new ChinNode<int>(9));//index 4
+            var initialNode = new AlexNode<int>(5);//index 0
+            var testLL = new AlexLinkedList<int>(initialNode);
+            testLL.AddLast(new AlexNode<int>(6));//index 1
+            testLL.AddLast(new AlexNode<int>(7));//index 2
+            testLL.AddLast(new AlexNode<int>(8));//index 3
+            testLL.AddLast(new AlexNode<int>(9));//index 4
 
-            testLL.InsertAfterNodeIndex(new ChinNode<int>(99), 1);
+            testLL.InsertAfterNodeIndex(new AlexNode<int>(99), 1);
 
             Assert.AreEqual(6, testLL.Count);
 
