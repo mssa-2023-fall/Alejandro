@@ -4,7 +4,7 @@ using GroceryLib;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-
+/*
 //Utilized a bool variable for while the customer shops
 bool addMoreItems = false;
 Console.WriteLine("Welcome to Chancho's SuperMarket! Below are the items: ");
@@ -55,4 +55,10 @@ Console.WriteLine("******************************");
 
 
 //Capabilities added for store manager to add products to the ProductDictionary
-productDictionary.AddProduct("Orange Juice", 5.49M);
+productDictionary.AddProduct("Orange Juice", 5.49M);*/
+
+ShoppingCart cart = new ShoppingCart();
+cart.AddToCart(1, 1);
+cart.AddToCart(1, 2);
+
+Console.WriteLine(cart.cartItems[1]);

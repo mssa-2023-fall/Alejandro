@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryLib", "GroceryLib\GroceryLib.csproj", "{C5907784-B4D5-47F3-B1A5-9D3729985524}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroceryLib", "GroceryLib\GroceryLib.csproj", "{C5907784-B4D5-47F3-B1A5-9D3729985524}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Print Receipt", "Print Receipt\Print Receipt.csproj", "{7E1EBB5E-A785-409A-99EB-4F1C46237A0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Print Receipt", "Print Receipt\Print Receipt.csproj", "{7E1EBB5E-A785-409A-99EB-4F1C46237A0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryCartTest", "GroceryCartTest\GroceryCartTest.csproj", "{6E9095F2-4A8F-4219-80C6-2434E0921390}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7E1EBB5E-A785-409A-99EB-4F1C46237A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E1EBB5E-A785-409A-99EB-4F1C46237A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E1EBB5E-A785-409A-99EB-4F1C46237A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E9095F2-4A8F-4219-80C6-2434E0921390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E9095F2-4A8F-4219-80C6-2434E0921390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E9095F2-4A8F-4219-80C6-2434E0921390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E9095F2-4A8F-4219-80C6-2434E0921390}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
