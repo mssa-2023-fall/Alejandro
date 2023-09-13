@@ -15,7 +15,7 @@ namespace LoginLib
         public byte[] Salt;
         public Customer(string first, string last, string password, string email)
         {
-           
+            Salt = RandomNumberGenerator.GetBytes(64);
             Email = email;
             FirstName = first;
             LastName = last;
