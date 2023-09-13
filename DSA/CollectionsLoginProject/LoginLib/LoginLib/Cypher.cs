@@ -14,8 +14,7 @@ namespace CustomerLogin
         HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
         public byte[] ComputeHash(string input, byte[] salt)
         {
-            salt = RandomNumberGenerator.GetBytes(keySize);
-
+            
             var hash = Rfc2898DeriveBytes.Pbkdf2(
                 Encoding.UTF8.GetBytes(input),
                 salt,
