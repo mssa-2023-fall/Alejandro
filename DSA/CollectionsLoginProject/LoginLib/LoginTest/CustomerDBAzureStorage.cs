@@ -1,9 +1,15 @@
-﻿using Azure.Data.Tables;
+﻿using Azure;
+using Azure.Data.Tables;
+using Azure.Identity;
+using Azure.Security.KeyVault.Keys;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using LoginLib;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -21,13 +27,17 @@ namespace LoginTest
         private string _tableName;
         private string _keyVaultUri;
         private TableServiceClient _tableServiceClient;
+        private KeyClient _keyClient;
+        private CryptographyClient _key;
+
+
         [TestInitialize]
-        public void init()
-        {
-            var config = new ConfigurationBuilder()
-                .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
-                .Build();
-            _tenantID = config["Azure:TenantID"];
+        public void init()                                                                
+        {                                                                                 
+            var config = new ConfigurationBuilder()                                       
+                .AddUserSecrets(Assembly.GetExecutingAssembly(), true)                    
+                .Build();                                                                 
+            _tenantID = config["Azure:TenantID"];                                         
             _clientID = config["Azure:ClientID"];
             _ClientSecret = config["Azure:ClientSecret"];
             _tableConnStr = config["Azure:TableConnStr"];
@@ -36,8 +46,25 @@ namespace LoginTest
             //code to create a table: _tableName
             _tableServiceClient = new TableServiceClient(_tableConnStr);
             _tableServiceClient.CreateTableIfNotExists(_tableName);
+            //create Key Client
+            _keyClient = new KeyClient(new Uri(_keyVaultUri), new ClientSecretCredential(_tenantID, _clientID, _ClientSecret));
+            _key = _keyClient.GetCryptographyClient("mssa");
+        }
+
+        [TestMethod]
+        public void EncryptDecryptWithKeyVault()
+        {
+            
+            var plaintText = "Hello World";
+            byte[] encryptedKeyResult = _key.Encrypt(EncryptionAlgorithm.RsaOaep,Encoding.UTF8.GetBytes(plaintText)).Ciphertext;
+            byte[] decyptedKeyResult = _key.Decrypt(EncryptionAlgorithm.RsaOaep, encryptedKeyResult).Plaintext;
+            string decryptedText = Encoding.UTF8.GetString(decyptedKeyResult);
+
+            Assert.AreEqual(plaintText, decryptedText);
+            
 
         }
+
         [TestMethod]
         public void ConfirmTenantIDAndOtherVariables()
         {
@@ -67,17 +94,36 @@ namespace LoginTest
         public void CustomerInsertAndRetrieveTest()
         {
             TableClient _testTable = _tableServiceClient.GetTableClient(_tableName);
-            Customer testCustomer = new Customer("Frank","Gambino", "password","FrankTheTank@RedHat.com");
+            Customer testCustomer = new Customer("Frank","Gambino", "password","FrankTheTank@RedHat.com", "11112222");
             _testTable.AddEntity(testCustomer);
             
         }
-        //Insert a test record and confirm we can read it back
 
+        [TestMethod]
+        public void CustomerInsterAndQueryTest()
+        {
+            TableClient _testTable = _tableServiceClient.GetTableClient(_tableName);
+            Customer testCustomer = new Customer("Mike", "West", "password", "TheRealMike@RedHat.com", "11112222");
+            Customer testCustomer1 = new Customer("Adam", "Christensen", "password", "Spades@RedHat.com", "11112222");
+            Customer testCustomer2 = new Customer("David", "Williams", "password", "Diamonds@RedHat.com", "11112222");
+
+            _testTable.AddEntity(testCustomer);
+            _testTable.AddEntity(testCustomer1);
+            _testTable.AddEntity(testCustomer2);
+            var result = testCustomer.FirstName;
+
+            Assert.AreEqual(testCustomer.FirstName, "Mike");
+            Assert.AreEqual(testCustomer1.FirstName, "Adam");
+            Assert.AreEqual(result.Count(), 4);
+
+        }
+
+        //Insert a test record and confirm we can read it back
         [TestCleanup]
         public void Cleanup()
         {
             //code to delete a table: _tableName
-            //_tableServiceClient.DeleteTable(_tableName);
+            _tableServiceClient.DeleteTable(_tableName);
         }
 
         // install storage explorer from here: https://go.microsoft.com/fwlink/?linkid=2216182&clcid=0x409

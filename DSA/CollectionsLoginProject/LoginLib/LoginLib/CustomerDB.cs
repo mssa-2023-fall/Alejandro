@@ -15,9 +15,9 @@ namespace LoginLib
         public CustomerDictionary() {
             customerInformation = new Dictionary<string, Customer>();
             {
-                Customer Andrew = new Customer("Andrew", "Spralix", "password","GermanFox@RedHat.com");
-                Customer Mike = new Customer("Mike", "Kraus", "password", "SilverFox@RedHat.com");
-                Customer Alex = new Customer("Alex", "Corvus", "password", "CorvusNidum@Outlook.com");
+                Customer Andrew = new Customer("Andrew", "Spralix", "password","GermanFox@RedHat.com", "11112222");
+                Customer Mike = new Customer("Mike", "Kraus", "password", "SilverFox@RedHat.com", "11112222");
+                Customer Alex = new Customer("Alex", "Corvus", "password", "CorvusNidum@Outlook.com", "11112222");
                 customerInformation.TryAdd(Andrew.Email, Andrew);
                 customerInformation.TryAdd(Mike.Email, Mike);
                 customerInformation.TryAdd(Alex.Email, Alex);
@@ -36,9 +36,9 @@ namespace LoginLib
 
         }
 
-        public void NewCustomer(string email, string password, string firstName, string lastName)
+        public void NewCustomer(string email, string password, string firstName, string lastName, string creditCard)
         {
-            Customer customer = new Customer(firstName, lastName, password, email);
+            Customer customer = new Customer(firstName, lastName, password, email, creditCard);
             CustomerDictionary newCustomer = new CustomerDictionary();
 
             newCustomer.customerInformation.TryAdd(customer.Email, customer);
