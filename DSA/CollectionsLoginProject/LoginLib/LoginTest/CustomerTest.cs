@@ -14,7 +14,7 @@ namespace LoginTest
         [TestMethod]
         public void TestCustomerConstructor()
         {
-            Customer testCustomer = new Customer("Alex", "Corvus", "password", "corvusnidum@outlook.com");
+            Customer testCustomer = new Customer("Alex", "Corvus", "password", "corvusnidum@outlook.com", "11112222");
             Assert.AreEqual("Alex", testCustomer.FirstName);
             Assert.AreEqual("corvusnidum@outlook.com", testCustomer.Email);
             Assert.AreEqual(64, testCustomer.PassHash.Length);

@@ -52,7 +52,7 @@ namespace CustomerLogin
 
             return Encoding.Unicode.GetString(output.ToArray());
         }
-        public async Task<byte[]> EncryptCreditCard(string clearPassword, byte[] passwordHash, string creditCard)
+        public async Task<byte[]> EncryptCreditCard(string clearPassword, string creditCard)
         {
             using Aes aes = Aes.Create();
             aes.Key = DeriveKeyFromPassword(clearPassword);
