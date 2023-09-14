@@ -17,7 +17,7 @@ namespace LoginLib
             {
                 Customer Andrew = new Customer("Andrew", "Spralix", "password","GermanFox@RedHat.com");
                 Customer Mike = new Customer("Mike", "Kraus", "password", "SilverFox@RedHat.com");
-                Customer Alex = new Customer("Alex", "Corvus", "password", "CorvusNidum@outlook.com");
+                Customer Alex = new Customer("Alex", "Corvus", "password", "CorvusNidum@Outlook.com");
                 customerInformation.TryAdd(Andrew.Email, Andrew);
                 customerInformation.TryAdd(Mike.Email, Mike);
                 customerInformation.TryAdd(Alex.Email, Alex);
