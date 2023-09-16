@@ -1,65 +1,35 @@
-﻿using MiniProject;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BinaryTreeLib
+namespace MiniProject
 {
     public class BinaryTree
     {
-        public List<TreeNode> Nodes { get; set; }
-        public BinaryTree(TreeNode Root)
+        public TreeNode createBST(int[] array)
         {
-            this.Root = Root;
+            Array.Sort(array);
+            return BalanceTree(array, 0, array.Length - 1);
         }
 
-        public TreeNode Root { get; }
-        private int level = 0;
-
-        public BinaryTree(int[] inputArray)
+        public TreeNode BalanceTree(int[] array, int start, int end)
         {
-            if (inputArray == null || inputArray.Length == 0) throw new ArgumentException("invalid array");
 
-            Nodes = new List<TreeNode>();
-            this.Root = BuildTree(inputArray, 0, inputArray.Length - 1, null);
+            if (array == null || array.Length == 0 || start > end)
+            {
+                return null;
+            }
+
+            int mid = (start + end) / 2;
+            TreeNode root = new TreeNode(array[mid]);
+
+            root.LeftChild = (BalanceTree(array, start, mid - 1));
+            root.RightChild = (BalanceTree(array, mid + 1, end));
+
+            return root;
         }
-
-        private TreeNode BuildTree(int[] inputArray, int start = 0, int end = 0, TreeNode? _parent = null)
-        {
-            int mid = (end + start) / 2;
-            if (end == start)
-            { mid = start; }
-            TreeNode t;
-            if (_parent != null)
-            {
-                t = new TreeNode(inputArray[mid], _parent, level);
-
-            }
-            else
-            {
-                t = new TreeNode(inputArray[mid], null, 0);
-            }
-            Nodes.Add(t);
-            level++;
-            //build left
-            if (start != mid)
-            {
-                t.LeftChild = BuildTree(inputArray, start, mid - 1, t);
-            }
-
-            //build right
-            if (end != mid)
-            { t.RightChild = BuildTree(inputArray, mid + 1, end, t); }
-
-            return t;
-        }
-
-        
-
 
     }
-
-    
 }
