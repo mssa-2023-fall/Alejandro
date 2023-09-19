@@ -1,3 +1,9 @@
+using CsvHelper;
+using CsvHelper.Configuration;
+using Parquet;
+using Parquet.Serialization;
+using System.Globalization;
+
 namespace LearnSystemIO
 {
     [TestClass]
@@ -93,7 +99,7 @@ namespace LearnSystemIO
             Assert.IsTrue(s.CanWrite);
             Assert.IsTrue(s.CanSeek);
             Assert.IsTrue(s.CanRead);
-            Assert.AreEqual(100, s.Length);
+            Assert.AreEqual(200, s.Length);
             Assert.AreEqual(0, s.Position);
 
             Assert.AreEqual(0, s.ReadByte());
@@ -131,7 +137,7 @@ namespace LearnSystemIO
             bw.Flush();
 
             //Assert
-            int inputDataByteCount = 43;
+            int inputDataByteCount = 49;
             var testFile = new FileInfo("binary.bin");
             Assert.AreEqual(inputDataByteCount, testFile.Length);
             //Stream s2 = new FileStream("binary.bin", FileMode.Open);//same as other tests,
@@ -151,8 +157,8 @@ namespace LearnSystemIO
         [TestMethod]
         public void CopyFileTest()
         {
-            string srcFile = @"B:\mvr.mp4";
-            string destFile = @"B:\copy1-mvr.mp4";
+            string srcFile = @"C:\test\a.png";
+            string destFile = @"C:\test\copy-a.png";
 
             var br = new BinaryReader(new FileStream(srcFile, FileMode.Open));
             var bw = new BinaryWriter(new FileStream(destFile, FileMode.OpenOrCreate));
@@ -177,18 +183,18 @@ namespace LearnSystemIO
         {
             string input = @"1, 1928, 44, ""Emil Jannings"", ""The Last Command, The Way of All Flesh""";
             Winner w = new Winner(input);
-            Assert.AreEqual(1, w._index);
-            Assert.AreEqual(1928, w._year);
-            Assert.AreEqual(44, w._age);
-            Assert.AreEqual("Emil Jannings", w._name);
-            Assert.AreEqual("The Last Command, The Way of All Flesh", w._movie);
+            Assert.AreEqual(1, w.Index);
+            Assert.AreEqual(1928, w.Year);
+            Assert.AreEqual(44, w.Age);
+            Assert.AreEqual("Emil Jannings", w.Name);
+            Assert.AreEqual("The Last Command, The Way of All Flesh", w.Movie);
         }
         [TestMethod]
         public void CreateAListOfWinnerFromCsvFile()
         {
             List<Winner> winners = new List<Winner>();
 
-            using (StreamReader sr = new StreamReader(@"c:\test\oscar_age_male.csv"))
+            using (StreamReader sr = new StreamReader(@"b:\oscar_age_male.csv"))
             {
                 string line;
                 // Read and display lines from the file until the end of
@@ -202,11 +208,11 @@ namespace LearnSystemIO
             }
 
             Assert.AreEqual(89, winners.Count);
-            Assert.AreEqual(76, winners.Max(w => w._age));
-            Assert.AreEqual(29, winners.Min(w => w._age));
-            Assert.AreEqual(1928, winners.Min(w => w._year));
+            Assert.AreEqual(76, winners.Max(w => w.Age));
+            Assert.AreEqual(29, winners.Min(w => w.Age));
+            Assert.AreEqual(1928, winners.Min(w => w.Year));
             var multiYearWinner =
-                winners.GroupBy(winner => winner._name) //create group of record based on Actors Name
+                winners.GroupBy(winner => winner.Name) //create group of record based on Actors Name
                 .Select(g => new { Actor = g.Key, Count = g.Count() })// return a new anon class with 2 properties:Actor, and Count
                 .Where(g => g.Count > 1)//only the actors who won more than once
                 .OrderByDescending(g => g.Count)
@@ -215,13 +221,46 @@ namespace LearnSystemIO
             Assert.AreEqual(9, multiYearWinner.Count);
             Assert.AreEqual("Daniel Day-Lewis", multiYearWinner[0].Actor);
 
-            var sw = new StreamWriter(@"c:\test\top-oscar-actors.csv");
+            var sw = new StreamWriter(@"b:\top-oscar-actors.csv");
             sw.WriteLine($"{"Actor",20}{"Number Of Award",20}");
             foreach (var item in multiYearWinner)
             {
                 sw.WriteLine($"{item.Actor,20}{item.Count,20}");
             }
             sw.Close();
+        }
+    
+
+
+        [TestMethod]
+        public void ParseCsvUsingCsvHelperPackage()
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                BadDataFound = null,
+                Quote='"',
+                Delimiter=", ",
+            };
+
+            IEnumerable<Winner> records;
+            Winner w;
+            List<Winner> winners;
+            using (var reader = new StreamReader(@"B:\oscar_age_male.csv"))
+            using (var csv = new CsvReader(reader, config))
+            {
+                records = csv.GetRecords<Winner>();
+                winners = records.ToList();
+                w = winners[0];
+            }
+
+            Assert.AreEqual(1, w.Index);
+            Assert.AreEqual(1928, w.Year);
+            Assert.AreEqual(44, w.Age);
+            Assert.AreEqual("Emil Jannings", w.Name);
+            Assert.AreEqual("The Last Command, The Way of All Flesh", w.Movie);
+            ParquetSerializer.SerializeAsync(winners, @"B:\winner.parquet").Wait();
+
         }
     }
 }
