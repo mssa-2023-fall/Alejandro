@@ -3,6 +3,7 @@
 using MiniProject;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 
@@ -58,8 +59,37 @@ static int[] MergeTwoArraysAndSort(int[] array1, int[] array2)
 
 Console.WriteLine(MergeTwoArraysAndSort(list1, list2));
 
+int[] list5 = { 2, 4, 6, 8, 1, 2, 5, 4, 3 };
+static int[] DropWhileShort(int[] input)
+{
+    int x = 0;
+    if (input.Length == 0) { return new int[0]; }
+    
+    if (input[x % 2] == 1)
+    { Console.WriteLine(input[x..]);
+     return input[x..]; }
+    else { return new int[0]; }
+
+}
+
+DropWhileShort(list5);
+
+string input = @"1, 1928, 44, ""Emil Jannings"", ""The Last Command, The Way of All Flesh""";
+int index = input.IndexOf(',', 12);
+string[] separator = { ", "  };
+Console.WriteLine(index);
+/*public static int[] DropWhileShort(int[] input)
+{
+    var emptyArray = new int[] { };
+    int x = 0;
+    if (input.Length == 0) { return new int[0]; }
+    if (input[x % 2] == 1)
 
 
 
+            }
+            else { return new int[0]; }
+             
+        }*/
 
 
