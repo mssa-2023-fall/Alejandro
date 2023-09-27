@@ -1,10 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using MiniProject;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel.Design.Serialization;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
 using System.Security.AccessControl;
 
 
@@ -72,12 +77,12 @@ static int[] DropWhileShort(int[] input)
 
 }
 
-DropWhileShort(list5);
+//DropWhileShort(list5);
 
 string input = @"1, 1928, 44, ""Emil Jannings"", ""The Last Command, The Way of All Flesh""";
 int index = input.IndexOf(',', 12);
 string[] separator = { ", "  };
-Console.WriteLine(index);
+//Console.WriteLine(index);
 /*public static int[] DropWhileShort(int[] input)
 {
     var emptyArray = new int[] { };
@@ -92,4 +97,32 @@ Console.WriteLine(index);
              
         }*/
 
+ static int CountDeafRats(string town)
+{
+    town.Replace(" ", "");
+    town.Split('P');
+    int count = 0;
+    int index = town.IndexOf('P');
+    if(town.IndexOf('~')%2==1 && count < index )
+    {   
+        count++; }
+
+
+    return indextail;
+}
+
+Console.WriteLine(CountDeafRats("~O~O~OO~O~O~P~OO~~O~O~O~OO~"));
+
+static bool IsPangram(string sentence)
+ {
+    var distinctLetters = sentence.ToLower().Where(char.IsLetter).Distinct();
+    int distinctLetterCount = distinctLetters.Count();
+
+    if (distinctLetterCount == 26)  
+        return true; 
+    return false;
+    
+}
+
+Console.WriteLine(IsPangram("The quick brown fox jumps over the lazy dog."));
 

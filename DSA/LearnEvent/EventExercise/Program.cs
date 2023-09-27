@@ -25,6 +25,9 @@ void NoisyListSample()
     Console.ReadLine();
 }
 
+
+
+
 void List2_OnItemRemoved<T>(NoisyList<T> arg1, (int CountBeforeRemove, int CountAfterRemove, int ItemRemoved, DateTime RemoveTimestamp) arg2)
 {
     Console.WriteLine($"{arg2.ItemRemoved} was remove from {arg1.Name} on {arg2.RemoveTimestamp}, there are {arg2.CountAfterRemove} items now.");
