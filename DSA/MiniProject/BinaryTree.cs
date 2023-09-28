@@ -31,5 +31,26 @@ namespace MiniProject
             return root;
         }
 
+        public TreeNode CreateArrayTree(int[] array)
+        {
+            return NewArrayTree(array, array[0]);
+
+        }
+
+        private TreeNode NewArrayTree(int[] array, int start)
+        {
+            if (array == null || array.Length == 0 || (start < 0))
+            { return null; }
+            TreeNode root = new TreeNode(array[start]);
+            root.LeftChild = NewArrayTree(array, start * 2 + 1);
+            root.RightChild = NewArrayTree(array, start * 2 + 2);
+            return root;
+        }
+
+
+
+        
     }
 }
+
+

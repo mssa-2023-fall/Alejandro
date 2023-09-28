@@ -396,3 +396,14 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/DSA/SQL/SQLConnection/SQLConnection/SQLConnection.csproj
+/DSA/SQL/SQLConnection/SQLConnection/SQLConnection.sln
+/DSA/SQL/SQLConnection/SQLCustomerLib/SQLCustomerLib.csproj
+/DSA/SQL/SQLConnection/CreateTableCustomerApp/CreateTableCustomerApp.sln
+/DSA/SQL/SQLConnection/SQLConnection/Employee.cs
+/DSA/SQL/SQLConnection/SQLConnection/Program.cs
+/DSA/SQL/SQLConnection/SQLCustomerLib/Customer.cs
+/DSA/SQL/SQLConnection/SQLCustomerLib/Tables.cs
+/Notebook-1.ipynb
+/DSA/SQL/SQLConnection/CreateTableCustomerApp/CreateTableCustomerApp.csproj
+/DSA/SQL/SQLConnection/CreateTableCustomerApp/Program.cs

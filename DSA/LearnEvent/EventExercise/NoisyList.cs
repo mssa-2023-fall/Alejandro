@@ -28,6 +28,7 @@ namespace EventExercise
                 {
                     CountBeforeAddition = list.Count - 1,
                     CountAfterAddition = list.Count,
+                    
                     ItemAdded = item,
                     InsertionTimestamp = DateTime.Now,
                     ItemPositionInList = list.IndexOf(item)
@@ -54,23 +55,48 @@ namespace EventExercise
                 OnItemRemoved.Invoke(this, (list.Count + 1, list.Count, item, DateTime.Now));//tuple rules
             }
         }
+
+        public void CountMessagesAndNotify(List<string> peopleList)
+        {
+            
+            
+            
+             foreach(var item in peopleList)
+                if (item.Distinct().Count() == 3)
+                {
+                    peopleList.Add(item);
+                    if (OnItemAdded != null) // only prepare arg if someone is listening
+                    {
+                        var arg = new OnItemAddedEventArgs<T>
+                        {
+                            CountBeforeAddition = list.Count - 1,
+                            CountAfterAddition = list.Count,
+                            
+                            InsertionTimestamp = DateTime.Now,
+                            
+                        };
+                        OnItemAdded.Invoke(this, arg); //raising the event
+                    }
+                }
+        }
+
         public T this[int index] { get => list[index]; set => list[index] = value; }
 
         public event ItemAddedEventDelegate<T> OnItemAdded; // named delegate here
         public event Action<NoisyList<T>> OnListCleared; // we are using Action<> generic delegate here
         public event Action<NoisyList<T>, (int CountBeforeRemove, int CountAfterRemove, T? ItemRemoved, DateTime RemoveTimestamp)> OnItemRemoved;
         //third one uses a tuple to group event arguments without creating another class like OnItemAddedEventArgs
-    }
-    // we are using a named delegate here
-    public delegate void ItemAddedEventDelegate<T>(NoisyList<T> sender, OnItemAddedEventArgs<T> args);
-    //we need to define what is to be expected by the event handler
-    public class OnItemAddedEventArgs<T> : EventArgs
-    {
-        public int CountBeforeAddition { get; set; }
-        public int CountAfterAddition { get; set; }
-        public T? ItemAdded { get; set; }
-        public DateTime InsertionTimestamp { get; set; }
-        public int ItemPositionInList { get; set; }
-    }
 
+        // we are using a named delegate here
+        public delegate void ItemAddedEventDelegate<T>(NoisyList<T> sender, OnItemAddedEventArgs<T> args);
+        //we need to define what is to be expected by the event handler
+        public class OnItemAddedEventArgs<T> : EventArgs
+        {
+            public int CountBeforeAddition { get; set; }
+            public int CountAfterAddition { get; set; }
+            public T? ItemAdded { get; set; }
+            public DateTime InsertionTimestamp { get; set; }
+            public int ItemPositionInList { get; set; }
+        }
+    }
 }
