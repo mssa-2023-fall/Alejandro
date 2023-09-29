@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 
 namespace MortgageLib
@@ -82,9 +83,19 @@ namespace MortgageLib
         public void MakeMonthlyPayment()
         {
             if (NumberOfPaymentsMade < Years * 12)
-            {
-                double remainingBalance = GetPayoffAmount();
-                
+            {   
+
+                double remainingBalance = 0;
+                if (!(Payments.Count == 0))
+                { remainingBalance = Payments[NumberOfPaymentsMade].RemainingBalance; }
+
+                else
+                {
+                    remainingBalance = RemainingBalance;
+
+                }
+
+
 
                 double interestPayment = remainingBalance * InterestRate;
                 double principalPayment = MonthlyPayment - interestPayment;

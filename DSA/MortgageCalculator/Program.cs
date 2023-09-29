@@ -1,10 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
 using MortgageLib;
+using Spectre.Console;
 using System.Text.Json;
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Show Me The Money!");
 
 //Collect the Principle
-Console.WriteLine("Enter the principal amount: ");
+AnsiConsole.MarkupLine(("Enter the principal amount: "));
 double principal = double.Parse(Console.ReadLine());
 //Collect the interest rate
 Console.WriteLine("Enter the interest rate: ");
@@ -14,15 +16,15 @@ double interestRate = double.Parse(Console.ReadLine());
 Console.WriteLine("Enter the years of the loan: ");
 int years = int.Parse(Console.ReadLine());
 
-//Collect the downpayment 
+//Collect the down payment 
 Console.WriteLine("Enter the down payment: ");
 double downPayment = double.Parse(Console.ReadLine());
 
 //Collect the start Date of the Loan
-Console.WriteLine("Enter the start date of the loan: ");
+AnsiConsole.Render(new Rule("Enter the start date of the loan: ").RightJustified());
 DateTime dateTime = DateTime.Parse(Console.ReadLine());
 
-Mortgage newMortgage = new Mortgage(principal, interestRate, years, dateTime, downPayment);
+Mortgage newMortgage = new(principal, interestRate, years, dateTime, downPayment);
 
 Console.WriteLine($"The monthly mortgage payment is ${newMortgage.MonthlyPayment:F2}.");
 Console.WriteLine($"The principle amount is ${newMortgage.Principal}.");
@@ -53,7 +55,7 @@ static void PrintMenuOptions(Mortgage newMortgage)
             newMortgage.MakeMonthlyPayment();
         }
 
-        if (key == "J")
+        if (key.ToUpper() == "J")
         {
             string json = JsonSerializer.Serialize(newMortgage, new JsonSerializerOptions
             { WriteIndented = true });
@@ -61,7 +63,7 @@ static void PrintMenuOptions(Mortgage newMortgage)
             File.WriteAllText("mortgage_result.json", json);
             Console.WriteLine(json);
         }
-        if (key == "I")
+        if (key.ToUpper() == "I")
         {
             Console.WriteLine("Enter target date: ");
             DateTime dateTime = DateTime.Parse(Console.ReadLine());
