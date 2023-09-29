@@ -17,6 +17,7 @@ namespace MortgageLib
         public int NumberOfPaymentsMade { get;  set; }
         public Dictionary<int, Payment> Payments { get; set; }
 
+
         public Mortgage(double principle, double interest, int years, DateTime dateTime, double down)
         {
             Principal = principle;
@@ -24,9 +25,15 @@ namespace MortgageLib
             Years = years*12;
             StartDate = dateTime;
             DownPayment = down;
+            RemainingBalance = Principal - down;
             GetMonthlyPayment();
             Amortization();
+            Payments = new Dictionary<int, Payment>();
+            NumberOfPaymentsMade = 0;
+
+
         }
+        
 
         private double GetMonthlyPayment()
         {
@@ -38,12 +45,19 @@ namespace MortgageLib
             return MonthlyPayment;
         }
 
-        public double GetPayoffAmount(Payment payment)
-        {
-             RemainingBalance = Principal * (1 - (Math.Pow(1 + InterestRate, -Payments.Count)) /
+        public double GetPayoffAmount()
+        {   if (Payments.Count == null)
+            {
+                RemainingBalance = Principal * (1 -Math.Pow(1 + InterestRate, 0) /
                                 InterestRate);
+                return RemainingBalance;
+            }
 
-            return RemainingBalance;
+            if(Payments.Count > 0)
+            {
+                return Payments[NumberOfPaymentsMade].RemainingBalance;
+            }
+            return 0;
         }
 
         public void Amortization()
@@ -51,7 +65,7 @@ namespace MortgageLib
             //Amortization Schedule Calculations//
             
             Console.WriteLine($"Monthly Payment: {MonthlyPayment:C}");
-            Console.WriteLine("Amortization Schedule:");
+            Console.WriteLine($"*****AMORTIZATION SCHEDULE******");
             Console.WriteLine("Month\t\tPrincipal\tInterest\tRemaining Balance");
             double remainingBalance = Principal;
             for (int month = 1; month <= Years; month++)
@@ -65,14 +79,17 @@ namespace MortgageLib
             
         }
 
-        public void MakePayment(DateTime date, double amount)
+        public void MakeMonthlyPayment()
         {
             if (NumberOfPaymentsMade < Years * 12)
             {
+                double remainingBalance = GetPayoffAmount();
                 
-                double interestPayment = RemainingBalance * InterestRate;
+
+                double interestPayment = remainingBalance * InterestRate;
                 double principalPayment = MonthlyPayment - interestPayment;
-                RemainingBalance -= principalPayment;
+                remainingBalance -= principalPayment;
+
                 NumberOfPaymentsMade++;
 
                 // Store payment information in the Payments dictionary
@@ -80,18 +97,16 @@ namespace MortgageLib
                 {
                     PrincipalPaid = principalPayment,
                     InterestPaid = interestPayment,
-                    RemainingBalance = RemainingBalance,
-                    PaymentDate = date
-                }) ;
-
-                Console.WriteLine($"Payment #{NumberOfPaymentsMade}: Principal Paid = {principalPayment:C}, Interest Paid = {interestPayment:C}, Remaining Balance = {RemainingBalance:C}");
+                    RemainingBalance = remainingBalance,
+                    PaymentDate = DateTime.Now
+                });
+                Console.WriteLine($"Payment of {MonthlyPayment} made.\t Remaining Balance: {remainingBalance} \t Principal Paid: {principalPayment} \t Interest Paid: {interestPayment}.");
             }
             else
             {
                 Console.WriteLine("Loan has already been fully paid off.");
             }
-
-
+                
         }
 
         public double GetInterestPaidToDate(DateTime targetDate)

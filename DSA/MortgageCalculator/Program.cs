@@ -31,8 +31,8 @@ Console.WriteLine($"The down payment on the mortgage is ${newMortgage.DownPaymen
 Console.WriteLine($"The start date of the loan is {newMortgage.StartDate}.");
 Console.WriteLine($"The end date of the loan is {newMortgage.StartDate.AddYears(years)}");
 
-Console.WriteLine($"*****AMORTIZATION SCHEDULE******");
-newMortgage.Amortization();
+
+
 
 PrintMenuOptions(newMortgage);
 static void PrintMenuOptions(Mortgage newMortgage)
@@ -47,11 +47,10 @@ static void PrintMenuOptions(Mortgage newMortgage)
         key = Console.ReadLine();
         if (key == "8")
         {
-            Console.WriteLine($"Enter the Payment Date: e.g 2023, 10, 1");
-            DateTime PaymentDate = DateTime.Parse(Console.ReadLine());
-            Console.WriteLine($"Enter the Payment Date: e.g 2023, 10, 1");
-            double amount = double.Parse(Console.ReadLine());
-            newMortgage.MakePayment(PaymentDate, amount);
+            
+            
+            
+            newMortgage.MakeMonthlyPayment();
         }
 
         if (key == "J")
