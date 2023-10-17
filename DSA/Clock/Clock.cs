@@ -22,7 +22,7 @@ namespace Clock
         public double GetDegreeHours()
             { DegreeHours = Hours * 30; return DegreeHours;}
         public double GetDegreeGivenTime(double Hour, double Minute)
-            {
+        { 
                 Hours = Hour;
                 Minutes = Minute;
                 GetDegreeHours();
@@ -40,8 +40,10 @@ namespace Clock
 
 
                 //Returning the absolute value of result
-                return result < 0 ? (double)result * (-1) : result;
-            }
+                return Math.Abs(result);
+        }
+
+ 
 
     }
 }
