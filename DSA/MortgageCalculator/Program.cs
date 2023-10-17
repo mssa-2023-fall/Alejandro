@@ -21,9 +21,8 @@ Console.WriteLine("Enter the down payment: ");
 double downPayment = double.Parse(Console.ReadLine());
 
 //Collect the start Date of the Loan
-AnsiConsole.Render(new Rule("Enter the start date of the loan: ").RightJustified());
-DateTime dateTime = DateTime.Parse(Console.ReadLine());
 
+DateTime dateTime = AnsiConsole.Ask<DateTime>(Console.ReadLine());
 Mortgage newMortgage = new(principal, interestRate, years, dateTime, downPayment);
 
 Console.WriteLine($"The monthly mortgage payment is ${newMortgage.MonthlyPayment:F2}.");
@@ -32,6 +31,7 @@ Console.WriteLine($"The interest rate is {newMortgage.InterestRate*12*100}%.");
 Console.WriteLine($"The down payment on the mortgage is ${newMortgage.DownPayment}.");
 Console.WriteLine($"The start date of the loan is {newMortgage.StartDate}.");
 Console.WriteLine($"The end date of the loan is {newMortgage.StartDate.AddYears(years)}");
+
 
 
 
@@ -73,4 +73,35 @@ static void PrintMenuOptions(Mortgage newMortgage)
 }
 
 
+var favorites = AnsiConsole.Prompt(
+    new MultiSelectionPrompt<string>()
+        .PageSize(10)
+        .Title("What are your [green]favorite fruits[/]?")
+        .MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+        .InstructionsText("[grey](Press [blue][/] to toggle a fruit, [green][/] to accept)[/]")
+        .AddChoiceGroup("Berries", new[]
+        {
+            "Blackcurrant", "Blueberry", "Cloudberry",
+            "Elderberry", "Honeyberry", "Mulberry"
+        })
+        .AddChoices(new[]
+        {
+            "Apple", "Apricot", "Avocado", "Banana",
+            "Cherry", "Cocunut", "Date", "Dragonfruit", "Durian",
+            "Egg plant",  "Fig", "Grape", "Guava",
+            "Jackfruit", "Jambul", "Kiwano", "Kiwifruit", "Lime", "Lylo",
+            "Lychee", "Melon", "Nectarine", "Orange", "Olive"
+        }));
+
+var fruit = favorites.Count == 1 ? favorites[0] : null;
+if (string.IsNullOrWhiteSpace(fruit))
+{
+    fruit = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Ok, but if you could only choose [green]one[/]?")
+            .MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+            .AddChoices(favorites));
+}
+
+AnsiConsole.MarkupLine("You selected: [yellow]{0}[/]", fruit);
 
