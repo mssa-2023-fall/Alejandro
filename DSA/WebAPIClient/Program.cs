@@ -23,6 +23,13 @@ foreach(var repo in repositories)
 }
 */
 
+/*static async Task<List<Repository>> ProcessRepositoriesAsync(HttpClient client)
+{
+    await using Stream stream = await client.GetStreamAsync("https://api.github.com/orgs/mssa-2023-fall/repos");
+    var repositories = await JsonSerializer.DeserializeAsync<List<Repository>>(stream);
+
+    return repositories ?? new();
+}*/
 
 /*HttpClient clientNinja = new HttpClient();
 clientNinja.DefaultRequestHeaders.Accept.Clear();
