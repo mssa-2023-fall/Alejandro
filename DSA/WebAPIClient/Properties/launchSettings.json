@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WebAPIClient": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "apikey": "IfogA5T7fuhkZ1E0jpjKlA==EEEI2zaQ99CY3QZg"
+      }
+    }
+  }
+}

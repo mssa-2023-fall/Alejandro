@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClockDegree", "ClockDegree.csproj", "{37CAC6FE-2AF4-43DC-9250-4ED7FB083312}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clock", "..\Clock\Clock.csproj", "{F78DEF36-94EB-4045-857F-CFFF0ED98E57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClockDegreeApp", "..\ClockDegreeApp\ClockDegreeApp.csproj", "{633FF5D2-27ED-439E-8347-95EA0A486A3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37CAC6FE-2AF4-43DC-9250-4ED7FB083312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37CAC6FE-2AF4-43DC-9250-4ED7FB083312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37CAC6FE-2AF4-43DC-9250-4ED7FB083312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37CAC6FE-2AF4-43DC-9250-4ED7FB083312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F78DEF36-94EB-4045-857F-CFFF0ED98E57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78DEF36-94EB-4045-857F-CFFF0ED98E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78DEF36-94EB-4045-857F-CFFF0ED98E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78DEF36-94EB-4045-857F-CFFF0ED98E57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{633FF5D2-27ED-439E-8347-95EA0A486A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{633FF5D2-27ED-439E-8347-95EA0A486A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{633FF5D2-27ED-439E-8347-95EA0A486A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{633FF5D2-27ED-439E-8347-95EA0A486A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {912C42D0-A665-4A02-8BAD-79F700597688}
+	EndGlobalSection
+EndGlobal

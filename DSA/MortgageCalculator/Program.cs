@@ -1,10 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
 using MortgageLib;
+using Spectre.Console;
 using System.Text.Json;
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Show Me The Money!");
 
 //Collect the Principle
-Console.WriteLine("Enter the principal amount: ");
+AnsiConsole.MarkupLine(("Enter the principal amount: "));
 double principal = double.Parse(Console.ReadLine());
 //Collect the interest rate
 Console.WriteLine("Enter the interest rate: ");
@@ -14,15 +16,14 @@ double interestRate = double.Parse(Console.ReadLine());
 Console.WriteLine("Enter the years of the loan: ");
 int years = int.Parse(Console.ReadLine());
 
-//Collect the downpayment 
+//Collect the down payment 
 Console.WriteLine("Enter the down payment: ");
 double downPayment = double.Parse(Console.ReadLine());
 
 //Collect the start Date of the Loan
-Console.WriteLine("Enter the start date of the loan: ");
-DateTime dateTime = DateTime.Parse(Console.ReadLine());
 
-Mortgage newMortgage = new Mortgage(principal, interestRate, years, dateTime, downPayment);
+DateTime dateTime = AnsiConsole.Ask<DateTime>(Console.ReadLine());
+Mortgage newMortgage = new(principal, interestRate, years, dateTime, downPayment);
 
 Console.WriteLine($"The monthly mortgage payment is ${newMortgage.MonthlyPayment:F2}.");
 Console.WriteLine($"The principle amount is ${newMortgage.Principal}.");
@@ -31,8 +32,9 @@ Console.WriteLine($"The down payment on the mortgage is ${newMortgage.DownPaymen
 Console.WriteLine($"The start date of the loan is {newMortgage.StartDate}.");
 Console.WriteLine($"The end date of the loan is {newMortgage.StartDate.AddYears(years)}");
 
-Console.WriteLine($"*****AMORTIZATION SCHEDULE******");
-newMortgage.Amortization();
+
+
+
 
 PrintMenuOptions(newMortgage);
 static void PrintMenuOptions(Mortgage newMortgage)
@@ -47,14 +49,13 @@ static void PrintMenuOptions(Mortgage newMortgage)
         key = Console.ReadLine();
         if (key == "8")
         {
-            Console.WriteLine($"Enter the Payment Date: e.g 2023, 10, 1");
-            DateTime PaymentDate = DateTime.Parse(Console.ReadLine());
-            Console.WriteLine($"Enter the Payment Date: e.g 2023, 10, 1");
-            double amount = double.Parse(Console.ReadLine());
-            newMortgage.MakePayment(PaymentDate, amount);
+            
+            
+            
+            newMortgage.MakeMonthlyPayment();
         }
 
-        if (key == "J")
+        if (key.ToUpper() == "J")
         {
             string json = JsonSerializer.Serialize(newMortgage, new JsonSerializerOptions
             { WriteIndented = true });
@@ -62,7 +63,7 @@ static void PrintMenuOptions(Mortgage newMortgage)
             File.WriteAllText("mortgage_result.json", json);
             Console.WriteLine(json);
         }
-        if (key == "I")
+        if (key.ToUpper() == "I")
         {
             Console.WriteLine("Enter target date: ");
             DateTime dateTime = DateTime.Parse(Console.ReadLine());
@@ -72,4 +73,35 @@ static void PrintMenuOptions(Mortgage newMortgage)
 }
 
 
+var favorites = AnsiConsole.Prompt(
+    new MultiSelectionPrompt<string>()
+        .PageSize(10)
+        .Title("What are your [green]favorite fruits[/]?")
+        .MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+        .InstructionsText("[grey](Press [blue][/] to toggle a fruit, [green][/] to accept)[/]")
+        .AddChoiceGroup("Berries", new[]
+        {
+            "Blackcurrant", "Blueberry", "Cloudberry",
+            "Elderberry", "Honeyberry", "Mulberry"
+        })
+        .AddChoices(new[]
+        {
+            "Apple", "Apricot", "Avocado", "Banana",
+            "Cherry", "Cocunut", "Date", "Dragonfruit", "Durian",
+            "Egg plant",  "Fig", "Grape", "Guava",
+            "Jackfruit", "Jambul", "Kiwano", "Kiwifruit", "Lime", "Lylo",
+            "Lychee", "Melon", "Nectarine", "Orange", "Olive"
+        }));
+
+var fruit = favorites.Count == 1 ? favorites[0] : null;
+if (string.IsNullOrWhiteSpace(fruit))
+{
+    fruit = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Ok, but if you could only choose [green]one[/]?")
+            .MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+            .AddChoices(favorites));
+}
+
+AnsiConsole.MarkupLine("You selected: [yellow]{0}[/]", fruit);
 

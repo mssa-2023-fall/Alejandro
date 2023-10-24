@@ -77,7 +77,7 @@ static int[] DropWhileShort(int[] input)
 
 }
 
-//DropWhileShort(list5);
+DropWhileShort(list5);
 
 string input = @"1, 1928, 44, ""Emil Jannings"", ""The Last Command, The Way of All Flesh""";
 int index = input.IndexOf(',', 12);
@@ -97,21 +97,22 @@ string[] separator = { ", "  };
              
         }*/
 
- static int CountDeafRats(string town)
+string thissentence = "A river dog.";
+
+static bool Unique(string sentence)
 {
-    town.Replace(" ", "");
-    town.Split('P');
-    int count = 0;
-    int index = town.IndexOf('P');
-    if(town.IndexOf('~')%2==1 && count < index )
-    {   
-        count++; }
+    
+    var distinctCount = sentence.ToLower().Where(char.IsLetter).Distinct();
+    int totalDistinct = distinctCount.Count();
+    Console.WriteLine($"THis number letter {totalDistinct} {sentence}");
+    if (totalDistinct == 26)
+        { return true; }
+   
+    return false;
 
 
-    return indextail;
 }
-
-Console.WriteLine(CountDeafRats("~O~O~OO~O~O~P~OO~~O~O~O~OO~"));
+Console.WriteLine(Unique(thissentence));
 
 static bool IsPangram(string sentence)
  {
@@ -125,4 +126,18 @@ static bool IsPangram(string sentence)
 }
 
 Console.WriteLine(IsPangram("The quick brown fox jumps over the lazy dog."));
+
+int[] NicolasGrades = { 83, 85, 88, 99, 75 };
+
+AddNewGrade(NicolasGrades, 100);
+static void AddNewGrade(int[] StudentGrades, int grade)
+{
+    Array.Resize(ref  StudentGrades, StudentGrades.Length+1);
+    StudentGrades[StudentGrades.Length-1] = grade;
+    var StudentTotal = StudentGrades.Sum(x => x);
+    var average = StudentTotal / StudentGrades.Length;
+    Console.WriteLine($"New Grade: {grade} added. New Average is {average}");
+}
+
+
 
